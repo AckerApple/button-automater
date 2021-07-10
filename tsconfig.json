@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2015",
+    "lib": [
+      "es2018"
+    ]
+  },
+  "include": ["./src/index.ts"],
+  "linterOptions": {
+    "exclude": ["**"]
+  }
+}
