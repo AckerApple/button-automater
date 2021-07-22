@@ -1,6 +1,6 @@
 {
   "change-config": {
-    "buttons": ["green", "red"],
+    "buttons": ["yellow", "green", "red", "blue"],
     "hold": {
       "title": "change to next config",
       "action": "change-next-config"
