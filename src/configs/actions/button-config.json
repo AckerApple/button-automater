@@ -118,8 +118,8 @@
         }
       },
       {
-        "title": "button-automater",
-        "itemPath": "vscode://file/Users/ackerapple/projects/services/button-automater/",
+        "title": "button-automator",
+        "itemPath": "vscode://file/Users/ackerapple/projects/services/button-automator/",
         "app": {
           "app": { "name": "Visual Studio Code" }
         }
