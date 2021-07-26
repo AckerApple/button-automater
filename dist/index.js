@@ -24,7 +24,7 @@ class App {
         this.connection = new UsbConnection_class_1.UsbConnection(controllerConfig);
         this.lastHeld = [];
         this.lastPresses = [];
-        this.pressTimeListen = 800;
+        this.pressTimeListen = 800; // how long to wait before examining all buttons pressed
         this.actionConfigs = {
             default: require('./configs/actions/button-config.json'),
             jordi: require('./configs/actions/jordi-config.json')
@@ -88,16 +88,30 @@ class App {
     }
     holdAction() {
         const actions = Object.values(this.buttons);
-        for (const buttonActions of actions) {
-            if (!buttonsMatch(buttonActions.buttons, this.lastHeld)) {
-                continue; // action trigger buttons not matched
+        const bestChoice = actions.reduce((best, config) => {
+            var _a;
+            // is best better than this one
+            if (best) {
+                if (best.config.buttons.length > config.buttons.length) {
+                    return best; // current has more button matches
+                }
+                if (best.actionType === 'hold' && !config.hold) {
+                    return best; // current doesn't even have a hold action
+                }
             }
-            const holdAction = buttonActions.hold;
-            // no hold action? run the first press action
-            if (!holdAction && buttonActions.presses) {
-                return this.runAction(buttonActions.presses[0]);
+            // not even a match?
+            if (!buttonsMatch(config.buttons, this.lastHeld)) {
+                return best; // current doesn't even match what's held
             }
-            this.runAction(holdAction);
+            if (config.hold) {
+                return { config, action: config.hold, actionType: 'hold' };
+            }
+            if (!best && ((_a = config.presses) === null || _a === void 0 ? void 0 : _a.length)) {
+                return { config, action: config.presses[0], actionType: 'presses' };
+            }
+        }, undefined);
+        if (bestChoice) {
+            this.runAction(bestChoice.action);
         }
     }
     action() {

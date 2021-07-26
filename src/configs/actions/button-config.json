@@ -56,12 +56,28 @@
       "app": { "app": { "name": "Notes" } }
     }]
   },
+  "🟢🔵 green+blue": {
+    "buttons": ["green", "blue"],
+    "hold": {
+      "title": "jira pay board",
+      "itemPath": "https://bstock.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=PAY"
+    },
+    "presses": [
+      {
+        "title": "3mp transactions",
+        "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/transactions"
+      },{
+        "title": "3mp payment methods",
+        "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/methods"
+      }
+    ]
+  },
   "green": {
     "buttons": ["green"],
     "hold": {
       "title": "jira pay board",
-      "itemPath": "https://bstock.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=PAY"
-  },
+      "itemPath": "https://bing.com"
+    },
     "presses": [
       {
         "title": "web",

@@ -17,7 +17,7 @@ class App {
 
   lastHeld: string[] = []
   lastPresses: string[][] = []
-  pressTimeListen = 800
+  pressTimeListen = 800 // how long to wait before examining all buttons pressed
 
   actionConfigs = {
     default: require('./configs/actions/button-config.json'),
@@ -109,19 +109,35 @@ class App {
 
   holdAction() {
     const actions = Object.values(this.buttons)
-    for(const buttonActions of actions){
-      if (!buttonsMatch(buttonActions.buttons, this.lastHeld)) {
-        continue // action trigger buttons not matched
+
+    const bestChoice: BestAction | undefined = actions.reduce((best: BestAction, config) => {
+      // is best better than this one
+      if (best) {
+        if (best.config.buttons.length > config.buttons.length) {
+          return best // current has more button matches
+        }
+
+        if (best.actionType === 'hold' && !config.hold) {
+          return best // current doesn't even have a hold action
+        }
       }
 
-      const holdAction = buttonActions.hold
-
-      // no hold action? run the first press action
-      if (!holdAction && buttonActions.presses) {
-        return this.runAction(buttonActions.presses[0])
+      // not even a match?
+      if (!buttonsMatch(config.buttons, this.lastHeld)) {
+        return best // current doesn't even match what's held
       }
 
-      this.runAction(holdAction)
+      if (config.hold) {
+        return {config, action: config.hold, actionType: 'hold'}
+      }
+
+      if (!best && config.presses?.length) {
+        return {config, action: config.presses[0], actionType: 'presses'}
+      }
+    }, undefined)
+
+    if (bestChoice) {
+      this.runAction(bestChoice.action)
     }
   }
 
@@ -226,4 +242,10 @@ function delay(ms) {
 
 function buttonsMatch(buttons0: string[], buttons1: string[]): boolean {
   return buttons0.filter(button => buttons1.includes(button)).length === buttons0.length
+}
+
+interface BestAction {
+  action:Action
+  config: ActionConfig
+  actionType: 'press' | 'presses' | 'hold' | string
 }
