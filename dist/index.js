@@ -156,7 +156,8 @@ class App {
         }
         if (action.keyTaps) {
             console.log(`keyboard taps ${action.keyTaps}`);
-            action.keyTaps.forEach(key => robot.keyTap(key));
+            const keyTaps = action.keyTaps instanceof Array ? action.keyTaps : action.keyTaps.split('');
+            keyTaps.forEach(key => robot.keyTap(key));
         }
         if (action.itemPath || action.app) {
             console.log(`open ${action.title}`, action.app);

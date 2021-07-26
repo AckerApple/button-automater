@@ -37,6 +37,11 @@
   },
   "yellow": {
     "buttons": ["yellow"],
+    "hold": {
+      "title": "new ticket text",
+      "keyTaps": "new-jira-ticket",
+      "description": "Trigger keyboard sniffer TextExpander to convert this into a bigger string"
+    },
     "presses": [{
       "title": "Mail",
       "itemPath": "./package.json",
@@ -54,9 +59,9 @@
   "green": {
     "buttons": ["green"],
     "hold": {
-      "title": "new ticket text",
-      "keyboardType": "### 📕 History\r\r\r\r### 🥅 Goal\r\r\r\r### 🪜 Steps\r\r\r\r### 🔬Tester acceptance\r\r\r\r"
-    },
+      "title": "jira pay board",
+      "itemPath": "https://bstock.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=PAY"
+  },
     "presses": [
       {
         "title": "web",

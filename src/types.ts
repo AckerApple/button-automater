@@ -6,7 +6,7 @@ export enum Actions {
 export interface Action {
   action?: Actions
   keyboardType?: string
-  keyTaps?: string[]
+  keyTaps?: string[] | string
   itemPath?: string
   title: string
   app?: any

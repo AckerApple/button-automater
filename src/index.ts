@@ -189,7 +189,8 @@ class App {
 
     if (action.keyTaps) {
       console.log(`keyboard taps ${action.keyTaps}`)
-      action.keyTaps.forEach(key => robot.keyTap(key))
+      const keyTaps = action.keyTaps instanceof Array ? action.keyTaps : (action.keyTaps as string).split('')
+      keyTaps.forEach(key => robot.keyTap(key))
     }
 
     if (action.itemPath || action.app) {
