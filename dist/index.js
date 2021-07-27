@@ -11,6 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const UsbConnection_class_1 = require("usb-support/dist/UsbConnection.class");
 const controllerConfig = require("./configs/eg-starts.controller.json");
+const defaultActions = require("./configs/actions/button-config.json");
+const jordiActions = require("./configs/actions/jordi-config.json");
 const rxjs_1 = require("rxjs");
 // import { DeviceProductLayout } from "usb-support/dist/typings";
 // Type "Hello World" then press enter.
@@ -25,14 +27,15 @@ class App {
         this.lastPresses = [];
         this.pressTimeListen = 800; // how long to wait before examining all buttons pressed
         this.actionConfigs = {
-            default: require('./configs/actions/button-config.json'),
-            jordi: require('./configs/actions/jordi-config.json')
+            default: defaultActions,
+            jordi: jordiActions,
         };
         this.buttons = this.actionConfigs.default;
         this.hotButtons = [];
         this.subs.add(this.connection.monitor.$change.subscribe(pressed => this.onPress(pressed)));
         this.connection.connect();
         this.determineHotButtons();
+        this.connection.$failed.subscribe(() => console.log('usb device connect failed'));
         this.subs.add(this.connection.$connected.subscribe(() => console.log('usb device connected')));
     }
     determineHotButtons() {
@@ -76,9 +79,9 @@ class App {
     }
     play() {
         const isHoldAction = this.connection.monitor.lastPressed.length;
-        console.log('isHoldAction', isHoldAction);
         // is button still held?
         if (isHoldAction) {
+            console.log('HoldAction');
             this.lastHeld = this.connection.monitor.lastPressed; // this.controlMonitor.lastPressed
             this.lastPresses.length = 0;
             return this.holdAction();
@@ -179,8 +182,14 @@ class App {
     }
 }
 console.info('starting app');
-new App();
-setInterval(() => console.log('keep alive'), 60000); // every-minute keep the process alive
+try {
+    new App();
+    console.info('app started');
+    setInterval(() => console.log('keep alive'), 60000); // every-minute keep the process alive
+}
+catch (err) {
+    console.error('Failed to start app', err);
+}
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }

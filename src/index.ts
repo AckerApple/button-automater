@@ -1,5 +1,7 @@
 import { UsbConnection } from "usb-support/dist/UsbConnection.class"
 import * as controllerConfig from "./configs/eg-starts.controller.json"
+import * as defaultActions from "./configs/actions/button-config.json"
+import * as jordiActions from "./configs/actions/jordi-config.json"
 import { Subscription } from "rxjs"
 import { Action, ActionConfig } from "./types"
 // import { DeviceProductLayout } from "usb-support/dist/typings";
@@ -7,6 +9,9 @@ import { Action, ActionConfig } from "./types"
 // Type "Hello World" then press enter.
 var robot = require("robotjs");
 const open = require('open');
+interface ButtonActionsConfig {
+  [name: string]: ActionConfig
+}
 
 class App {
   subs: Subscription = new Subscription()
@@ -18,10 +23,10 @@ class App {
   pressTimeListen = 800 // how long to wait before examining all buttons pressed
 
   actionConfigs = {
-    default: require('./configs/actions/button-config.json'),
-    jordi: require('./configs/actions/jordi-config.json')
+    default: defaultActions as any,
+    jordi: jordiActions as any,
   }
-  buttons: {[name: string]: ActionConfig} = this.actionConfigs.default as {[name: string]: ActionConfig}
+  buttons: ButtonActionsConfig = this.actionConfigs.default as {[name: string]: ActionConfig}
   hotButtons: ActionConfig[] = []
 
   constructor() {
@@ -31,6 +36,8 @@ class App {
 
     this.connection.connect()
     this.determineHotButtons()
+
+    this.connection.$failed.subscribe(() => console.log('usb device connect failed'))
 
     this.subs.add(
       this.connection.$connected.subscribe(() => console.log('usb device connected'))
@@ -96,10 +103,10 @@ class App {
   play() {
     const isHoldAction = this.connection.monitor.lastPressed.length
 
-    console.log('isHoldAction', isHoldAction)
 
     // is button still held?
     if (isHoldAction) {
+      console.log('HoldAction')
       this.lastHeld = this.connection.monitor.lastPressed // this.controlMonitor.lastPressed
       this.lastPresses.length = 0
       return this.holdAction()
@@ -233,9 +240,16 @@ class App {
 
 console.info('starting app')
 
-new App()
 
-setInterval(() => console.log('keep alive'), 60000) // every-minute keep the process alive
+try {
+  new App()
+  console.info('app started')
+  setInterval(() => console.log('keep alive'), 60000) // every-minute keep the process alive
+} catch (err) {
+	console.error('Failed to start app', err);
+}
+
+
 
 function delay(ms) {
   return new Promise((resolve) =>

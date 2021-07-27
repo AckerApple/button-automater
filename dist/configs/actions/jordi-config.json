@@ -1,0 +1,41 @@
+{
+    "change-config": {
+        "buttons": ["yellow", "green", "red", "blue"],
+        "hold": {
+            "title": "change to next config",
+            "action": "change-next-config"
+        },
+        "presses": [{
+                "title": "change to next config",
+                "action": "change-next-config"
+            }]
+    },
+    "red": {
+        "buttons": ["red"],
+        "press": {
+            "title": "right",
+            "keyTaps": ["right"]
+        }
+    },
+    "yellow": {
+        "buttons": ["yellow"],
+        "press": {
+            "title": "left",
+            "keyTaps": ["left"]
+        }
+    },
+    "green": {
+        "buttons": ["green"],
+        "press": {
+            "title": "down",
+            "keyTaps": ["down"]
+        }
+    },
+    "blue": {
+        "buttons": ["blue"],
+        "press": {
+            "title": "up",
+            "keyTaps": ["up"]
+        }
+    }
+}

@@ -1,0 +1,153 @@
+{
+    "change-config": {
+        "buttons": ["yellow", "green", "red", "blue"],
+        "hold": {
+            "title": "change to next config",
+            "action": "change-next-config"
+        },
+        "presses": [{
+                "title": "change to next config",
+                "action": "change-next-config"
+            }]
+    },
+    "finder": {
+        "buttons": ["blue", "yellow"],
+        "hold": {
+            "title": "finder",
+            "itemPath": "/Users/ackerapple/projects/"
+        },
+        "presses": [{
+                "title": "finder",
+                "itemPath": "/Users/ackerapple/projects/"
+            }]
+    },
+    "red": {
+        "buttons": ["red"],
+        "hold": {
+            "title": "YouTube Music",
+            "app": { "app": { "name": "YouTube Music" } }
+        },
+        "presses": [{
+                "title": "Slack",
+                "app": { "app": { "name": "Slack" } }
+            }, {
+                "title": "YouTube Music",
+                "app": { "app": { "name": "YouTube Music" } }
+            }]
+    },
+    "yellow": {
+        "buttons": ["yellow"],
+        "hold": {
+            "title": "new ticket text",
+            "keyTaps": "new-jira-ticket",
+            "description": "Trigger keyboard sniffer TextExpander to convert this into a bigger string"
+        },
+        "presses": [{
+                "title": "Mail",
+                "itemPath": "./package.json",
+                "app": { "app": { "name": "Mail" } }
+            }, {
+                "title": "Calendar",
+                "itemPath": "",
+                "app": { "app": { "name": "Calendar" } }
+            }, {
+                "title": "Notes",
+                "itemPath": "",
+                "app": { "app": { "name": "Notes" } }
+            }]
+    },
+    "🟢🔵 green+blue": {
+        "buttons": ["green", "blue"],
+        "hold": {
+            "title": "jira pay board",
+            "itemPath": "https://bstock.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=PAY"
+        },
+        "presses": [
+            {
+                "title": "3mp transactions",
+                "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/transactions"
+            }, {
+                "title": "3mp payment methods",
+                "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/methods"
+            }, {
+                "title": "api-module-support MRs",
+                "itemPath": "https://gitlab.bstock.io/b-stock/code/util/api-module-support/-/merge_requests/1"
+            }
+        ]
+    },
+    "green": {
+        "buttons": ["green"],
+        "hold": {
+            "title": "jira pay board",
+            "itemPath": "https://bing.com"
+        },
+        "presses": [
+            {
+                "title": "web",
+                "itemPath": "https://google.com"
+            },
+            {
+                "title": "web transactions",
+                "itemPath": "https://gitlab.bstock.io/b-stock/code/svc/payments/transactions/-/merge_requests"
+            },
+            {
+                "title": "web payment methods",
+                "itemPath": "https://gitlab.bstock.io/b-stock/code/svc/payments/methods/-/merge_requests"
+            },
+            {
+                "title": "web payment shared",
+                "itemPath": "https://gitlab.bstock.io/b-stock/code/svc/payments/shared/-/merge_requests"
+            },
+            {
+                "title": "digital fees board",
+                "itemPath": "https://gitlab.bstock.io/groups/b-stock/-/boards/172?scope=all&utf8=%E2%9C%93&label_name[]=digital-payment-fees&label_name[]=backend%20%3A%3A%20payments-eng"
+            }
+        ]
+    },
+    "blue": {
+        "buttons": ["blue"],
+        "hold": {
+            "title": "Airfoil",
+            "app": {
+                "app": { "name": "Airfoil" }
+            }
+        },
+        "presses": [
+            {
+                "title": "transactions",
+                "itemPath": "vscode://file/Users/ackerapple/projects/bstock/transactions/",
+                "app": {
+                    "app": { "name": "Visual Studio Code" }
+                }
+            },
+            {
+                "title": "payment-methods",
+                "itemPath": "vscode://file/Users/ackerapple/projects/bstock/payment-methods/",
+                "app": {
+                    "app": { "name": "Visual Studio Code" }
+                }
+            },
+            {
+                "title": "payments-shared",
+                "itemPath": "vscode://file/Users/ackerapple/projects/bstock/payments-shared/",
+                "app": {
+                    "app": { "name": "Visual Studio Code" }
+                }
+            },
+            {
+                "title": "hokus-pokus",
+                "itemPath": "vscode://file/Users/ackerapple/projects/services/hokus-pokus/",
+                "app": {
+                    "app": { "name": "Visual Studio Code" }
+                }
+            },
+            {
+                "title": "button-automator",
+                "itemPath": "vscode://file/Users/ackerapple/projects/services/button-automator/",
+                "app": {
+                    "app": { "name": "Visual Studio Code" }
+                }
+            }
+        ]
+    }
+}
