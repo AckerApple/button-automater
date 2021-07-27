@@ -1,8 +1,5 @@
-// import { InputControlMonitor } from "controller-helper/dist/InputControlMonitor.class"
-import { UsbConnection } from "controller-helper/dist/UsbConnection.class"
-import { DeviceProductLayout } from "controller-helper/dist/typings";
+import { UsbConnection } from "usb-support/dist/UsbConnection.class"
 import * as controllerConfig from "./configs/eg-starts.controller.json"
-// import * as buttons from './configs/actions/button-config.json'
 import { Subscription } from "rxjs"
 import { Action, ActionConfig } from "./types"
 
@@ -170,7 +167,7 @@ class App {
     // presses action, choose the best match
     const matchedConfig: ActionConfig = configMatches.reduce((best, one) => (best ? best.buttons.length : 0) > one.buttons.length ? best : one, null)
     if (matchedConfig && matchedConfig.presses) {
-      const presses = matchedConfig.buttons.reduce((sum, name) => sum + pressesByButton[name], 0)
+      const presses = matchedConfig.buttons.reduce((sum, name) => sum + pressesByButton[name], 0) / matchedConfig.buttons.length
 
       let action = matchedConfig.presses[ presses - 1 ]
       action = action || matchedConfig.presses[ matchedConfig.presses.length - 1 ] // no numbered action

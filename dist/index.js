@@ -9,10 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// import { InputControlMonitor } from "controller-helper/dist/InputControlMonitor.class"
-const UsbConnection_class_1 = require("controller-helper/dist/UsbConnection.class");
+const UsbConnection_class_1 = require("usb-support/dist/UsbConnection.class");
 const controllerConfig = require("./configs/eg-starts.controller.json");
-// import * as buttons from './configs/actions/button-config.json'
 const rxjs_1 = require("rxjs");
 // Type "Hello World" then press enter.
 var robot = require("robotjs");
@@ -140,7 +138,7 @@ class App {
         // presses action, choose the best match
         const matchedConfig = configMatches.reduce((best, one) => (best ? best.buttons.length : 0) > one.buttons.length ? best : one, null);
         if (matchedConfig && matchedConfig.presses) {
-            const presses = matchedConfig.buttons.reduce((sum, name) => sum + pressesByButton[name], 0);
+            const presses = matchedConfig.buttons.reduce((sum, name) => sum + pressesByButton[name], 0) / matchedConfig.buttons.length;
             let action = matchedConfig.presses[presses - 1];
             action = action || matchedConfig.presses[matchedConfig.presses.length - 1]; // no numbered action
             this.runAction(action);

@@ -69,6 +69,9 @@
       },{
         "title": "3mp payment methods",
         "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/methods"
+      },{
+        "title": "api-module-support MRs",
+        "itemPath": "https://gitlab.bstock.io/b-stock/code/util/api-module-support/-/merge_requests/1"
       }
     ]
   },

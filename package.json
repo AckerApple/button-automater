@@ -1,6 +1,6 @@
 {
   "name": "button-automator",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,10 +14,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "controller-helper": "git+https://github.com/ackerapple/usb-controller-repl.git",
     "open": "^8.2.1",
     "robotjs": "^0.6.0",
-    "rxjs": "^7.1.0"
+    "rxjs": "^7.1.0",
+    "usb-support": "git+https://github.com/ackerapple/usb-support.git"
   },
   "devDependencies": {
     "ts-node": "^10.0.0",
