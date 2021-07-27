@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const UsbConnection_class_1 = require("usb-support/dist/UsbConnection.class");
 const controllerConfig = require("./configs/eg-starts.controller.json");
 const rxjs_1 = require("rxjs");
+// import { DeviceProductLayout } from "usb-support/dist/typings";
 // Type "Hello World" then press enter.
 var robot = require("robotjs");
 const open = require('open');
@@ -30,9 +31,9 @@ class App {
         this.buttons = this.actionConfigs.default;
         this.hotButtons = [];
         this.subs.add(this.connection.monitor.$change.subscribe(pressed => this.onPress(pressed)));
-        // this.monitorControlByConfig(controllerConfig)
         this.connection.connect();
         this.determineHotButtons();
+        this.subs.add(this.connection.$connected.subscribe(() => console.log('usb device connected')));
     }
     determineHotButtons() {
         this.hotButtons.length = 0;
@@ -44,8 +45,8 @@ class App {
                 return; // ignore releases
             }
             console.log('pressed', pressed);
+            // actions that do NOT wait for other button presses or patterns
             const hotAction = this.getHotActionByPressed(pressed);
-            console.log('hotAction', hotAction);
             if (hotAction) {
                 return this.runAction(hotAction);
             }
@@ -177,6 +178,7 @@ class App {
         }
     }
 }
+console.info('starting app');
 new App();
 setInterval(() => console.log('keep alive'), 60000); // every-minute keep the process alive
 function delay(ms) {

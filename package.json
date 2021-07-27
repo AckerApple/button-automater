@@ -1,13 +1,13 @@
 {
   "name": "button-automator",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
     "save": "npm run build && npm run patch:version && git add . && git commit -m \"update\" && git push",
     "patch:version": "npm --no-git-tag-version version patch",
-    "start": "node dist/index",
-    "watch": "ts-node-dev src/index --watch",
+    "start": "node dist",
+    "watch": "ts-node-dev src --watch",
     "build": "tsc -p ./tsconfig.json"
   },
   "keywords": [],

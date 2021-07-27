@@ -10,7 +10,7 @@
       "es2018"
     ]
   },
-  "include": ["./src/index.ts"],
+  "include": ["./src"],
   "linterOptions": {
     "exclude": ["**"]
   }

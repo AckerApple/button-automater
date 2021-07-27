@@ -2,6 +2,7 @@ import { UsbConnection } from "usb-support/dist/UsbConnection.class"
 import * as controllerConfig from "./configs/eg-starts.controller.json"
 import { Subscription } from "rxjs"
 import { Action, ActionConfig } from "./types"
+// import { DeviceProductLayout } from "usb-support/dist/typings";
 
 // Type "Hello World" then press enter.
 var robot = require("robotjs");
@@ -28,9 +29,12 @@ class App {
       this.connection.monitor.$change.subscribe(pressed => this.onPress(pressed))
     )
 
-    // this.monitorControlByConfig(controllerConfig)
     this.connection.connect()
     this.determineHotButtons()
+
+    this.subs.add(
+      this.connection.$connected.subscribe(() => console.log('usb device connected'))
+    )
   }
 
   determineHotButtons() {
@@ -50,8 +54,8 @@ class App {
 
     console.log('pressed', pressed)
 
+    // actions that do NOT wait for other button presses or patterns
     const hotAction = this.getHotActionByPressed(pressed)
-    console.log('hotAction', hotAction)
     if (hotAction) {
       return this.runAction(hotAction)
     }
@@ -226,6 +230,8 @@ class App {
     return controller
   }*/
 }
+
+console.info('starting app')
 
 new App()
 
