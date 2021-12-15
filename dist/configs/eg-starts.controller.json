@@ -39,6 +39,13 @@
             "idle": 15,
             "updatedAt": 1624915866703,
             "pressed": false
+        },
+        "switch": {
+            "pos": 0,
+            "value": 0,
+            "idle": 127,
+            "updatedAt": 1624915866703,
+            "pressed": false
         }
     },
     "ignoreBits": [

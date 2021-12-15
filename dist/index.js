@@ -23,8 +23,10 @@ class App {
         this.subs = new rxjs_1.Subscription();
         // controlMonitor: InputControlMonitor = new InputControlMonitor()
         this.connection = new UsbConnection_class_1.UsbConnection(controllerConfig);
+        this.pressed = []; // currently pressed
         this.lastHeld = [];
         this.lastPresses = [];
+        // lastReleases: string[] = []
         this.pressTimeListen = 800; // how long to wait before examining all buttons pressed
         this.actionConfigs = {
             default: defaultActions,
@@ -32,11 +34,12 @@ class App {
         };
         this.buttons = this.actionConfigs.default;
         this.hotButtons = [];
-        this.subs.add(this.connection.monitor.$change.subscribe(pressed => this.onPress(pressed)));
+        this.subs.add(this.connection.monitor.$change.subscribe(pressed => this.onPress(pressed.map(x => x)) // clone pressed map
+        ));
         this.connection.connect();
         this.determineHotButtons();
-        this.connection.$failed.subscribe(() => console.log('usb device connect failed'));
-        this.subs.add(this.connection.$connected.subscribe(() => console.log('usb device connected')));
+        this.connection.$failed.subscribe(() => console.log('🔴 usb device connect failed'));
+        this.subs.add(this.connection.$connected.subscribe(() => console.log('🟩 usb device connected')));
     }
     determineHotButtons() {
         this.hotButtons.length = 0;
@@ -44,10 +47,10 @@ class App {
     }
     onPress(pressed) {
         return __awaiter(this, void 0, void 0, function* () {
+            this.determineReleases(pressed);
             if (pressed.length === 0) {
                 return; // ignore releases
             }
-            console.log('pressed', pressed);
             // actions that do NOT wait for other button presses or patterns
             const hotAction = this.getHotActionByPressed(pressed);
             if (hotAction) {
@@ -55,15 +58,40 @@ class App {
             }
             // first press of a new command
             if (!this.lastPresses.length) {
-                this.lastPresses.push(pressed);
-                yield delay(this.pressTimeListen);
-                this.play();
-                this.lastHeld.length = 0;
-                this.lastPresses.length = 0;
-                return;
+                return this.startFirstPressListen(pressed);
             }
             // additional presses
             this.lastPresses.push(pressed);
+        });
+    }
+    determineReleases(pressed) {
+        const previousPressed = this.pressed;
+        const released = previousPressed.filter(press => !pressed.includes(press));
+        this.pressed = pressed;
+        const releasesByButton = {
+            blue: released.includes('blue'),
+            red: released.includes('red'),
+            yellow: released.includes('yellow'),
+            green: released.includes('green'),
+            switch: released.includes('switch'),
+        };
+        const configMatches = this.getConfigMatches(releasesByButton);
+        const matchedConfig = configMatches.reduce((best, one) => (best ? best.buttons.length : 0) > one.buttons.length ? best : one, null);
+        if (matchedConfig && matchedConfig.releases) {
+            const releases = matchedConfig.buttons.reduce((sum, name) => sum + releasesByButton[name], 0) / matchedConfig.buttons.length;
+            let action = matchedConfig.releases[releases - 1];
+            action = action || matchedConfig.releases[matchedConfig.releases.length - 1]; // no numbered action
+            console.log('💥 run release action');
+            this.runAction(action);
+        }
+    }
+    startFirstPressListen(pressed) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.lastPresses.push(pressed);
+            yield delay(this.pressTimeListen);
+            this.play();
+            this.lastHeld.length = 0;
+            this.lastPresses.length = 0;
         });
     }
     getHotActionByPressed(pressed) {
@@ -81,7 +109,7 @@ class App {
         const isHoldAction = this.connection.monitor.lastPressed.length;
         // is button still held?
         if (isHoldAction) {
-            console.log('HoldAction');
+            console.info('HoldAction');
             this.lastHeld = this.connection.monitor.lastPressed; // this.controlMonitor.lastPressed
             this.lastPresses.length = 0;
             return this.holdAction();
@@ -122,23 +150,9 @@ class App {
             red: this.lastPresses.filter(pressed => pressed.includes('red')).length,
             yellow: this.lastPresses.filter(pressed => pressed.includes('yellow')).length,
             green: this.lastPresses.filter(pressed => pressed.includes('green')).length,
+            switch: this.lastPresses.filter(pressed => pressed.includes('switch')).length,
         };
-        const configEntries = Object.entries(this.buttons);
-        const configMatches = [];
-        for (const [name, config] of configEntries) {
-            const buttons = config.buttons; // buttons it takes to trigger this config
-            const buttonsPressed = Object.entries(pressesByButton).reduce((all, [key, value]) => {
-                if (value) {
-                    all.push(key);
-                }
-                return all;
-            }, []);
-            const matches = buttonsMatch(buttons, buttonsPressed);
-            // is the combination of buttons used matched
-            if (matches) {
-                configMatches.push(config);
-            }
-        }
+        const configMatches = this.getConfigMatches(pressesByButton);
         // presses action, choose the best match
         const matchedConfig = configMatches.reduce((best, one) => (best ? best.buttons.length : 0) > one.buttons.length ? best : one, null);
         if (matchedConfig && matchedConfig.presses) {
@@ -155,6 +169,25 @@ class App {
         robot.keyTap("enter")
         */
     }
+    getConfigMatches(buttonNames) {
+        const configEntries = Object.entries(this.buttons);
+        const configMatches = [];
+        for (const [_name, config] of configEntries) {
+            const buttons = config.buttons; // buttons it takes to trigger this config
+            const buttonsPressed = Object.entries(buttonNames).reduce((all, [key, value]) => {
+                if (value) {
+                    all.push(key);
+                }
+                return all;
+            }, []);
+            const matches = buttonsMatch(buttons, buttonsPressed);
+            // is the combination of buttons used matched
+            if (matches) {
+                configMatches.push(config);
+            }
+        }
+        return configMatches;
+    }
     runAction(action) {
         var _a;
         if ((_a = action.action) === null || _a === void 0 ? void 0 : _a.includes('change-next-config')) {
@@ -164,31 +197,31 @@ class App {
             const newIndex = currentIndex === actionConfigArray.length - 1 ? 0 : currentIndex + 1;
             this.buttons = actionConfigArray[newIndex];
             this.determineHotButtons();
-            console.log(`change to next configuration`);
+            console.info(`🎚 change to next configuration`, action.title);
         }
         if (action.keyboardType) {
-            console.log(`keyboard type ${action.title}`);
+            console.info(`⌨️ keyboard type ${action.title}`);
             robot.typeString(action.keyboardType);
         }
         if (action.keyTaps) {
-            console.log(`keyboard taps ${action.keyTaps}`);
+            console.info(`⌨️ keyboard taps ${action.keyTaps}`);
             const keyTaps = action.keyTaps instanceof Array ? action.keyTaps : action.keyTaps.split('');
             keyTaps.forEach(key => robot.keyTap(key));
         }
         if (action.itemPath || action.app) {
-            console.log(`open ${action.title}`, action.app);
+            console.info("⬆️  open", action.app, this.pressed);
             return open(action.itemPath || '', action.app);
         }
     }
 }
-console.info('starting app');
+console.info('⏳ starting app');
 try {
     new App();
-    console.info('app started');
-    setInterval(() => console.log('keep alive'), 60000); // every-minute keep the process alive
+    console.info('🟢 app started');
+    setInterval(() => console.log('🟢'), 60000); // every-minute keep the process alive
 }
 catch (err) {
-    console.error('Failed to start app', err);
+    console.error('🔴 Failed to start app', err);
 }
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));

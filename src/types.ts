@@ -15,6 +15,7 @@ export interface Action {
 export class ActionConfig {
   press?: Action // fire action the moment button is pressed
   presses?: Action[]
+  releases?: Action[]
   hold?: Action
 
   constructor(public buttons: string[]) {}

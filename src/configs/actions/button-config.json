@@ -1,16 +1,33 @@
 {
-  "change-config": {
+  "🎚 change-config": {
+    "buttons": ["switch"],
+    "presses": [{
+      "title": "TODO: change to next config",
+      "old_action": "change-next-config",
+      "app": {
+        "app": { "name": "Visual Studio Code" }
+      }
+    }],
+    "releases": [{
+      "title": "TODO: change to next config",
+      "old_action": "change-next-config",
+      "app": {
+        "app": { "name": "Airfoil" }
+      }
+    }]
+  },  "🔴🟢🟡🔵 change-config": {
     "buttons": ["yellow", "green", "red", "blue"],
     "hold": {
       "title": "change to next config",
-      "action": "change-next-config"
+      "action": "change-next-config",
+      "description": "switch what drives buttons"
     },
     "presses": [{
       "title": "change to next config",
       "action": "change-next-config"
     }]
   },
-  "finder": {
+  "🔵🟡 finder": {
     "buttons": ["blue", "yellow"],
     "hold": {
       "title": "finder",
@@ -21,7 +38,18 @@
       "itemPath": "/Users/ackerapple/projects/"
     }]
   },
-  "red": {
+  "🟡🔴 yellow red": {
+    "buttons": ["yellow", "red"],
+    "hold": {
+      "title": "TextExpander",
+      "app": { "app": { "name": "TextExpander" } }
+    },
+    "presses": [{
+      "title": "TextExpander",
+      "app": { "app": { "name": "TextExpander" } }
+    }]
+  },
+  "🔴 red": {
     "buttons": ["red"],
     "hold": {
       "title": "YouTube Music",
@@ -35,7 +63,7 @@
       "app": { "app": { "name": "YouTube Music" } }
     }]
   },
-  "yellow": {
+  "🟡 yellow": {
     "buttons": ["yellow"],
     "hold": {
       "title": "new ticket text",
@@ -75,11 +103,12 @@
       }
     ]
   },
-  "green": {
+  "🟢 green": {
     "buttons": ["green"],
     "hold": {
-      "title": "jira pay board",
-      "itemPath": "https://bing.com"
+      "title": "Messages",
+      "itemPath": "",
+      "app":{ "app":{"name": "Messages" }}
     },
     "presses": [
       {
@@ -87,24 +116,24 @@
         "itemPath": "https://google.com"
       },
       {
-        "title": "web transactions",
-        "itemPath": "https://gitlab.bstock.io/b-stock/code/svc/payments/transactions/-/merge_requests"
+        "title": "web ⚡️ transactions 3mp",
+        "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/transactions/-/merge_requests"
       },
       {
-        "title": "web payment methods",
-        "itemPath": "https://gitlab.bstock.io/b-stock/code/svc/payments/methods/-/merge_requests"
+        "title": "web 💳 payment methods 3mp",
+        "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/methods/-/merge_requests"
       },
       {
         "title": "web payment shared",
         "itemPath": "https://gitlab.bstock.io/b-stock/code/svc/payments/shared/-/merge_requests"
       },
       {
-        "title": "digital fees board",
-        "itemPath": "https://gitlab.bstock.io/groups/b-stock/-/boards/172?scope=all&utf8=%E2%9C%93&label_name[]=digital-payment-fees&label_name[]=backend%20%3A%3A%20payments-eng"
+        "title": "jira board",
+        "itemPath": "https://bstock.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=PAY"
       }
     ]
   },
-  "blue": {
+  "🔵 blue": {
     "buttons": ["blue"],
     "hold": {
       "title": "Airfoil",
@@ -115,14 +144,14 @@
     "presses": [
       {
         "title": "transactions",
-        "itemPath": "vscode://file/Users/ackerapple/projects/bstock/transactions/",
+        "itemPath": "vscode://file/Users/ackerapple/projects/bstock/3mp/transactions",
         "app": {
           "app": { "name": "Visual Studio Code" }
         }
       },
       {
         "title": "payment-methods",
-        "itemPath": "vscode://file/Users/ackerapple/projects/bstock/payment-methods/",
+        "itemPath": "vscode://file/Users/ackerapple/projects/bstock/3mp/methods/",
         "app": {
           "app": { "name": "Visual Studio Code" }
         }
