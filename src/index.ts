@@ -35,17 +35,17 @@ class App {
   constructor() {
     this.subs.add(
       this.connection.monitor.$change.subscribe(
-        pressed => this.onPress(pressed.map(x => x)) // clone pressed map
+        pressed => this.onPressChange(pressed.map(x => x)) // clone pressed map
       )
     )
 
     this.connection.connect()
     this.determineHotButtons()
 
-    this.connection.$failed.subscribe(() => console.log('🔴 usb device connect failed'))
+    this.connection.$failed.subscribe(() => console.error('🔴 usb device connect failed'))
 
     this.subs.add(
-      this.connection.$connected.subscribe(() => console.log('🟩 usb device connected'))
+      this.connection.$connected.subscribe(() => console.info('🟩 usb device connected'))
     )
   }
 
@@ -59,7 +59,7 @@ class App {
     )
   }
 
-  async onPress(pressed: string[]) {
+  async onPressChange(pressed: string[]) {
     this.determineReleases(pressed)
 
     if (pressed.length === 0) {
@@ -75,6 +75,10 @@ class App {
     // first press of a new command
     if (!this.lastPresses.length) {
       return this.startFirstPressListen(pressed)
+    }
+
+    if (this.lastPresses.length && this.lastPresses[this.lastPresses.length - 1].length > pressed.length) {
+      return
     }
 
     // additional presses
@@ -101,21 +105,24 @@ class App {
       let action = matchedConfig.releases[ releases - 1 ]
       action = action || matchedConfig.releases[ matchedConfig.releases.length - 1 ] // no numbered action
 
-      console.log('💥 run release action')
+      console.info('💥 run release action')
 
       this.runAction(action)
     }
   }
 
   async startFirstPressListen(pressed: string[]) {
+    console.info('🦻 Button action listen start ---')
     this.lastPresses.push(pressed)
     
     await delay(this.pressTimeListen)
 
+    console.info('👂 🔵 Playing button action ---', this.lastPresses)
     this.play()
 
     this.lastHeld.length = 0
     this.lastPresses.length = 0
+    console.info('👂 🛑 Button action listen end ---')
   }
 
   getHotActionByPressed(pressed: string[]): Action | undefined {
@@ -135,14 +142,20 @@ class App {
 
 
   play() {
-    const isHoldAction = this.connection.monitor.lastPressed.length
+    const isHoldAction = this.lastPresses.length && this.connection.monitor.lastPressed.length === this.lastPresses[this.lastPresses.length - 1].length
+
 
     // is button still held?
     if (isHoldAction) {
-      console.info('HoldAction')
       this.lastHeld = this.connection.monitor.lastPressed // this.controlMonitor.lastPressed
       this.lastPresses.length = 0
-      return this.holdAction()
+      const holdAction = this.holdAction()
+      
+      if (holdAction) {
+        console.info('✋ hold action')
+      }
+      
+      return holdAction
     }
 
     this.action()
@@ -179,39 +192,44 @@ class App {
 
     if (bestChoice) {
       this.runAction(bestChoice.action)
+      return bestChoice
     }
   }
 
   action() {
+    const colorCounter = (color:string) => (all: string[][], pressed: string[]) => {
+      if (pressed.includes(color)) {
+        all.push(pressed)
+      }
+      return all
+    }
+
     const pressesByButton = {
-      blue: this.lastPresses.filter(pressed => pressed.includes('blue')).length,
-      red: this.lastPresses.filter(pressed => pressed.includes('red')).length,
-      yellow: this.lastPresses.filter(pressed => pressed.includes('yellow')).length,
-      green: this.lastPresses.filter(pressed => pressed.includes('green')).length,
-      switch: this.lastPresses.filter(pressed => pressed.includes('switch')).length,
+      blue: this.lastPresses.reduce(colorCounter('blue'), []).length,
+      red: this.lastPresses.reduce(colorCounter('red'), []).length,
+      yellow: this.lastPresses.reduce(colorCounter('yellow'), []).length,
+      green: this.lastPresses.reduce(colorCounter('green'), []).length,
+      switch: this.lastPresses.reduce(colorCounter('switch'), []).length,
     }
 
     const configMatches: ActionConfig[] = this.getConfigMatches(pressesByButton)
-    
+   
     // presses action, choose the best match
-    const matchedConfig: ActionConfig = configMatches.reduce((best, one) => (best ? best.buttons.length : 0) > one.buttons.length ? best : one, null)
+    const matchedConfig: ActionConfig = configMatches.reduce((best, one) => {
+      const bestCount = best?.buttons.length || 0
+      return bestCount > one.buttons.length ? best : one
+    }, null)
     
     if (matchedConfig && matchedConfig.presses) {
-      const presses = matchedConfig.buttons.reduce((sum, name) => sum + pressesByButton[name], 0) / matchedConfig.buttons.length
+      // TODO: Will need unit tests to cover types of presses
+      const sourcePressCount = matchedConfig.buttons.reduce((sum, name) => sum + pressesByButton[name], 0)
+      const presses = Math.floor(sourcePressCount / matchedConfig.buttons.length)
 
       let action = matchedConfig.presses[ presses - 1 ]
       action = action || matchedConfig.presses[ matchedConfig.presses.length - 1 ] // no numbered action
 
       this.runAction(action)
     }
-
-    // Type "Hello World".
-    /*
-    ;
-
-    // Press enter.
-    robot.keyTap("enter")
-    */
   }
 
   getConfigMatches(buttonNames: {[index:string]: number | boolean}) {
@@ -220,14 +238,17 @@ class App {
     
     for (const [_name, config] of configEntries) {
       const buttons = config.buttons // buttons it takes to trigger this config
+      
       const buttonsPressed = Object.entries(buttonNames).reduce((all, [key, value]) => {
         if (value) {
           all.push(key)
         }
         return all
       }, [])
+      
+      
       const matches = buttonsMatch(buttons, buttonsPressed)
-
+      
       // is the combination of buttons used matched
       if (matches) {
         configMatches.push(config)
@@ -260,7 +281,7 @@ class App {
     }
 
     if (action.itemPath || action.app) {
-      console.info("⬆️  open", action.app, this.pressed)
+      console.info("⬆️  open", action.title, this.pressed)
       return open(action.itemPath || '', action.app)
     }
   }
@@ -271,7 +292,7 @@ console.info('⏳ starting app')
 try {
   new App()
   console.info('🟢 app started')
-  setInterval(() => console.log('🟢'), 60000) // every-minute keep the process alive
+  setInterval(() => console.info('👂 listening...'), 60000 * 2) // every two minutes, keep the process alive
 } catch (err) {
 	console.error('🔴 Failed to start app', err);
 }
@@ -285,7 +306,8 @@ function delay(ms) {
 }
 
 function buttonsMatch(buttons0: string[], buttons1: string[]): boolean {
-  return buttons0.filter(button => buttons1.includes(button)).length === buttons0.length
+  const matches = buttons0.filter(button => buttons1.includes(button)).length
+  return matches === buttons0.length
 }
 
 interface BestAction {

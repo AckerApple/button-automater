@@ -1,21 +1,5 @@
 {
-  "🎚 change-config": {
-    "buttons": ["switch"],
-    "presses": [{
-      "title": "TODO: change to next config",
-      "old_action": "change-next-config",
-      "app": {
-        "app": { "name": "Visual Studio Code" }
-      }
-    }],
-    "releases": [{
-      "title": "TODO: change to next config",
-      "old_action": "change-next-config",
-      "app": {
-        "app": { "name": "Airfoil" }
-      }
-    }]
-  },  "🔴🟢🟡🔵 change-config": {
+  "🔴🟢🟡🔵 change-config": {
     "buttons": ["yellow", "green", "red", "blue"],
     "hold": {
       "title": "change to next config",
@@ -52,8 +36,19 @@
   "🔴 red": {
     "buttons": ["red"],
     "hold": {
+      "title": "Calendar",
+      "app": { "app": { "name": "Calendar" } }
+    },
+    "presses": [{
       "title": "YouTube Music",
       "app": { "app": { "name": "YouTube Music" } }
+    }]
+  },
+  "🎚 🔴 red": {
+    "buttons": ["switch","red"],
+    "hold": {
+      "title": "Calendar",
+      "app": { "app": { "name": "Calendar" } }
     },
     "presses": [{
       "title": "Slack",
@@ -114,27 +109,66 @@
       {
         "title": "web",
         "itemPath": "https://google.com"
-      },
-      {
-        "title": "web ⚡️ transactions 3mp",
-        "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/transactions/-/merge_requests"
-      },
-      {
-        "title": "web 💳 payment methods 3mp",
-        "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/methods/-/merge_requests"
-      },
-      {
-        "title": "web payment shared",
-        "itemPath": "https://gitlab.bstock.io/b-stock/code/svc/payments/shared/-/merge_requests"
-      },
-      {
-        "title": "jira board",
-        "itemPath": "https://bstock.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=PAY"
       }
     ]
   },
+  "🎚 🟢 green": {
+    "buttons": ["switch", "green"],
+    "hold": {
+      "title": "Messages",
+      "itemPath": "",
+      "app":{ "app":{"name": "Messages" }}
+    },
+    "presses": [{
+      "title": "jira board",
+      "itemPath": "https://bstock.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=PAY"
+    },{
+      "title": "web ⚡️ transactions 3mp",
+      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/transactions/-/merge_requests"
+    },{
+      "title": "web 💳 payment methods 3mp",
+      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/methods/-/merge_requests"
+    },{
+      "title": "🪙 web payment shared",
+      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/common/payments-shared/-/merge_requests"
+    },{
+      "title": "🐈‍⬛ 🔧 nestjs-utils",
+      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/common/nestjs-utils/-/merge_requests"
+    }]
+  },
   "🔵 blue": {
     "buttons": ["blue"],
+    "hold": {
+      "title": "🔊 Airfoil",
+      "app": {
+        "app": { "name": "Airfoil" }
+      }
+    },
+    "presses": [
+      {
+        "title": "🌹 Beauty Tab",
+        "itemPath": "vscode://file/Users/ackerapple/projects/services/beauty-tab/",
+        "app": {
+          "app": { "name": "Visual Studio Code" }
+        }
+      },
+      {
+        "title": "🐇 hokus-pokus",
+        "itemPath": "vscode://file/Users/ackerapple/projects/services/hokus-pokus/",
+        "app": {
+          "app": { "name": "Visual Studio Code" }
+        }
+      },
+      {
+        "title": "🎛 button-automator",
+        "itemPath": "vscode://file/Users/ackerapple/projects/services/button-automator/",
+        "app": {
+          "app": { "name": "Visual Studio Code" }
+        }
+      }]
+  },
+  "🎚 🔵 blue": {
+    "buttons": ["switch", "blue"],
     "hold": {
       "title": "Airfoil",
       "app": {
@@ -143,14 +177,14 @@
     },
     "presses": [
       {
-        "title": "transactions",
+        "title": "⚡️ transactions",
         "itemPath": "vscode://file/Users/ackerapple/projects/bstock/3mp/transactions",
         "app": {
           "app": { "name": "Visual Studio Code" }
         }
       },
       {
-        "title": "payment-methods",
+        "title": "💳 payments-methods",
         "itemPath": "vscode://file/Users/ackerapple/projects/bstock/3mp/methods/",
         "app": {
           "app": { "name": "Visual Studio Code" }
@@ -164,15 +198,15 @@
         }
       },
       {
-        "title": "hokus-pokus",
-        "itemPath": "vscode://file/Users/ackerapple/projects/services/hokus-pokus/",
+        "title": "api-module-support",
+        "itemPath": "vscode://file/Users/ackerapple/projects/bstock/api-module-support/",
         "app": {
           "app": { "name": "Visual Studio Code" }
         }
       },
       {
-        "title": "button-automator",
-        "itemPath": "vscode://file/Users/ackerapple/projects/services/button-automator/",
+        "title": "🐈‍⬛ 🔧 nestjs-utils",
+        "itemPath": "vscode://file/Users/ackerapple/projects/bstock/3mp/nestjs-utils/",
         "app": {
           "app": { "name": "Visual Studio Code" }
         }

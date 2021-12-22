@@ -7,7 +7,7 @@
     "allowSyntheticDefaultImports": true,
     "target": "es2015",
     "lib": [
-      "es2018"
+      "es2018", "dom"
     ]
   },
   "include": ["./src"],
