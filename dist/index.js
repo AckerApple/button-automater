@@ -24,7 +24,6 @@ class App {
         // controlMonitor: InputControlMonitor = new InputControlMonitor()
         this.connection = new UsbConnection_class_1.UsbConnection(controllerConfig);
         this.pressed = []; // currently pressed
-        this.lastHeld = [];
         this.lastPresses = [];
         // lastReleases: string[] = []
         this.pressTimeListen = 800; // how long to wait before examining all buttons pressed
@@ -90,12 +89,11 @@ class App {
     }
     startFirstPressListen(pressed) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.info('🦻 Button action listen start ---');
+            console.info('🦻 Button action listen start ---', pressed);
             this.lastPresses.push(pressed);
             yield delay(this.pressTimeListen);
             console.info('👂 🔵 Playing button action ---', this.lastPresses);
             this.play();
-            this.lastHeld.length = 0;
             this.lastPresses.length = 0;
             console.info('👂 🛑 Button action listen end ---');
         });
@@ -115,9 +113,9 @@ class App {
         const isHoldAction = this.lastPresses.length && this.connection.monitor.lastPressed.length === this.lastPresses[this.lastPresses.length - 1].length;
         // is button still held?
         if (isHoldAction) {
-            this.lastHeld = this.connection.monitor.lastPressed; // this.controlMonitor.lastPressed
             this.lastPresses.length = 0;
-            const holdAction = this.holdAction();
+            const lastHeld = this.connection.monitor.lastPressed;
+            const holdAction = this.holdAction(lastHeld);
             if (holdAction) {
                 console.info('✋ hold action');
             }
@@ -125,7 +123,7 @@ class App {
         }
         this.action();
     }
-    holdAction() {
+    holdAction(lastHeld) {
         const actions = Object.values(this.buttons);
         const bestChoice = actions.reduce((best, config) => {
             var _a;
@@ -139,7 +137,7 @@ class App {
                 }
             }
             // not even a match?
-            if (!buttonsMatch(config.buttons, this.lastHeld)) {
+            if (!buttonsMatch(config.buttons, lastHeld)) {
                 return best; // current doesn't even match what's held
             }
             if (config.hold) {

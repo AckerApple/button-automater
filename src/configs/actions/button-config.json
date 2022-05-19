@@ -79,24 +79,35 @@
       "app": { "app": { "name": "Notes" } }
     }]
   },
-  "🟢🔵 green+blue": {
-    "buttons": ["green", "blue"],
+  "🎚 🟡 yellow": {
+    "buttons": ["switch", "yellow"],
     "hold": {
-      "title": "jira pay board",
-      "itemPath": "https://bstock.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=PAY"
+      "title": "new ticket text",
+      "keyTaps": "new-jira-ticket",
+      "description": "Trigger keyboard sniffer TextExpander to convert this into a bigger string"
     },
-    "presses": [
-      {
-        "title": "3mp transactions",
-        "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/transactions"
-      },{
-        "title": "3mp payment methods",
-        "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/methods"
-      },{
-        "title": "api-module-support MRs",
-        "itemPath": "https://gitlab.bstock.io/b-stock/code/util/api-module-support/-/merge_requests/1"
+    "presses": [{
+      "title": "Mail",
+      "itemPath": "./package.json",
+      "app": { "app": { "name": "Mail" } }
+    },{
+      "title": "Calendar",
+      "itemPath": "https://calendar.google.com/calendar/u/1/r"
+    },{
+      "title": "Notes",
+      "itemPath": "",
+      "app": { "app": { "name": "Notes" } }
+    }]
+  },
+  "🎚 🔵🟢 green+blue": {
+    "buttons": ["switch", "blue", "green"],
+    "presses": [{
+      "title": "🐳 dev-deps",
+      "itemPath": "vscode://file/Users/ackerapple/projects/bstock/3mp/dev-deps",
+      "app": {
+        "app": { "name": "Visual Studio Code" }
       }
-    ]
+    }]
   },
   "🟢 green": {
     "buttons": ["green"],
@@ -107,8 +118,12 @@
     },
     "presses": [
       {
-        "title": "web",
-        "itemPath": "https://google.com"
+        "title": "Github: Acker Apple",
+        "itemPath": "https://github.com/AckerApple"
+      },
+      {
+        "title": "🟦 LinkedIn",
+        "itemPath": "https://www.linkedin.com/"
       }
     ]
   },
@@ -120,8 +135,8 @@
       "app":{ "app":{"name": "Messages" }}
     },
     "presses": [{
-      "title": "jira board",
-      "itemPath": "https://bstock.atlassian.net/secure/RapidBoard.jspa?rapidView=19&projectKey=PAY"
+      "title": "💰 jira mula board",
+      "itemPath": "https://bstock.atlassian.net/jira/software/c/projects/MULA/boards/17"
     },{
       "title": "web ⚡️ transactions 3mp",
       "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/transactions/-/merge_requests"
