@@ -6,6 +6,7 @@
   "scripts": {
     "save": "npm run build && npm run patch:version && git add . && git commit -m \"update\" && git push",
     "patch:version": "npm --no-git-tag-version version patch",
+    "start:elias": "CONTROLLER_PATH=./configs/elias-starts.controller.json ACTIONS_PATH=./configs/actions/elias-config.json node dist",
     "start": "node dist",
     "watch": "ts-node-dev src --watch",
     "build": "tsc -p ./tsconfig.json"

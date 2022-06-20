@@ -1,0 +1,173 @@
+{
+    "🔴🟢🟡🔵 change-config": {
+        "buttons": ["yellow", "green", "red", "blue"],
+        "hold": {
+            "title": "change to next config",
+            "action": "change-next-config",
+            "description": "switch what drives buttons"
+        },
+        "presses": [{
+                "title": "change to next config",
+                "action": "change-next-config"
+            }]
+    },
+    "🔴 p1": {
+        "buttons": ["p1"],
+        "presses": [{
+                "title": "Terminal Projects",
+                "itemPath": "/home/eja/Projects/",
+                "app": {
+                    "app": { "name": "gnome-terminal", "arguments": ["--working-directory"] }
+                }
+            }, {
+                "title": "Terminal Projects",
+                "itemPath": "/home/eja/",
+                "app": {
+                    "app": { "name": "gnome-terminal", "arguments": ["--working-directory"] }
+                }
+            }]
+    },
+    "🔵🟡 finder": {
+        "buttons": ["blue", "yellow"],
+        "hold": {
+            "title": "finder",
+            "itemPath": "/Users/ackerapple/projects/"
+        },
+        "presses": [{
+                "title": "finder",
+                "itemPath": "/Users/ackerapple/projects/"
+            }]
+    },
+    "🟡🔴 yellow red": {
+        "buttons": ["yellow", "red"],
+        "hold": {
+            "title": "TextExpander",
+            "app": { "app": { "name": "TextExpander" } }
+        },
+        "presses": [{
+                "title": "TextExpander",
+                "app": { "app": { "name": "TextExpander" } }
+            }]
+    },
+    "🟡 yellow": {
+        "buttons": ["yellow"],
+        "hold": {
+            "title": "new ticket text",
+            "keyTaps": "new-jira-ticket",
+            "description": "Trigger keyboard sniffer TextExpander to convert this into a bigger string"
+        },
+        "presses": [{
+                "title": "Mail",
+                "itemPath": "./package.json",
+                "app": { "app": { "name": "Mail" } }
+            }, {
+                "title": "Calendar",
+                "itemPath": "",
+                "app": { "app": { "name": "Calendar" } }
+            }, {
+                "title": "Notes",
+                "itemPath": "",
+                "app": { "app": { "name": "Notes" } }
+            }]
+    },
+    "🎚 🟡 yellow": {
+        "buttons": ["switch", "yellow"],
+        "hold": {
+            "title": "new ticket text",
+            "keyTaps": "new-jira-ticket",
+            "description": "Trigger keyboard sniffer TextExpander to convert this into a bigger string"
+        },
+        "presses": [{
+                "title": "Mail",
+                "itemPath": "./package.json",
+                "app": { "app": { "name": "Mail" } }
+            }, {
+                "title": "Calendar",
+                "itemPath": "https://calendar.google.com/calendar/u/1/r"
+            }, {
+                "title": "Notes",
+                "itemPath": "",
+                "app": { "app": { "name": "Notes" } }
+            }]
+    },
+    "🎚 🔵🟢 green+blue": {
+        "buttons": ["blue", "green"],
+        "presses": [{
+                "title": "🐳 dev-deps",
+                "itemPath": "/home/eja/Projects/ultimate-test",
+                "app": {
+                    "app": { "name": "code" }
+                }
+            }]
+    },
+    "🟢 green": {
+        "buttons": ["green"],
+        "hold": {
+            "title": "Messages",
+            "itemPath": "",
+            "app": { "app": { "name": "Messages" } }
+        },
+        "presses": [{
+                "title": "💰 jira mula board",
+                "itemPath": "https://bstock.atlassian.net/jira/software/c/projects/MULA/boards/17"
+            }, {
+                "title": "web ⚡️ transactions 3mp",
+                "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/transactions/-/merge_requests"
+            }, {
+                "title": "web 💳 payment methods 3mp",
+                "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/methods/-/merge_requests"
+            }, {
+                "title": "🪙 web payment shared",
+                "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/common/payments-shared/-/merge_requests"
+            }, {
+                "title": "🐈‍⬛ 🔧 nestjs-utils",
+                "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/common/nestjs-utils/-/merge_requests"
+            }]
+    },
+    "🔵 blue": {
+        "buttons": ["blue"],
+        "hold": {
+            "title": "Airfoil",
+            "app": {
+                "app": { "name": "Airfoil" }
+            }
+        },
+        "presses": [
+            {
+                "title": "⚡️ fastest-node-typescript",
+                "itemPath": "/home/eja/Projects/fastest-node-typescript",
+                "app": {
+                    "app": { "name": "code" }
+                }
+            },
+            {
+                "title": "💳 payments-methods",
+                "itemPath": "vscode://file/Users/ackerapple/projects/bstock/3mp/methods/",
+                "app": {
+                    "app": { "name": "Visual Studio Code" }
+                }
+            },
+            {
+                "title": "payments-shared",
+                "itemPath": "vscode://file/Users/ackerapple/projects/bstock/payments-shared/",
+                "app": {
+                    "app": { "name": "Visual Studio Code" }
+                }
+            },
+            {
+                "title": "api-module-support",
+                "itemPath": "vscode://file/Users/ackerapple/projects/bstock/api-module-support/",
+                "app": {
+                    "app": { "name": "Visual Studio Code" }
+                }
+            },
+            {
+                "title": "🐈‍⬛ 🔧 nestjs-utils",
+                "itemPath": "vscode://file/Users/ackerapple/projects/bstock/3mp/nestjs-utils/",
+                "app": {
+                    "app": { "name": "Visual Studio Code" }
+                }
+            }
+        ]
+    }
+}

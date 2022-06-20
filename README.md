@@ -18,3 +18,12 @@ When you want Node code to be able to output keyboard strokes or listen to keybo
 > ⚙️ System Preferences > 🛡 Security & Privacy > ⌨️ Input Monitoring > Add your bash script
 
 > Deprecated steps (use if above steps do not work) ~~⚙️ System Preferences > 🛡 Security & Privacy > ⌨️ Input Monitoring > Add Terminal and check the check boxes (⚠️ This may not be a safe security practice to give all of Terminal input monitoring)~~
+
+### Linux
+
+`Trouble installing robotjs on linux?`
+Before you can successfully install, run this:
+
+```
+sudo apt-get install libxtst-dev libpng++-dev
+```

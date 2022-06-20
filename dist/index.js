@@ -9,9 +9,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const controllerPath = process.env.CONTROLLER_PATH || './configs/eg-starts.controller.json';
+const actionsPath = process.env.ACTIONS_PATH || './configs/actions/button-config.json';
+console.log('⚙️ Using configs', {
+    controllerPath,
+    actionsPath
+});
 const UsbConnection_class_1 = require("usb-support/dist/UsbConnection.class");
-const controllerConfig = require("./configs/eg-starts.controller.json");
-const defaultActions = require("./configs/actions/button-config.json");
+const controllerConfig = require(controllerPath);
+const defaultActions = require(actionsPath);
 const jordiActions = require("./configs/actions/jordi-config.json");
 const rxjs_1 = require("rxjs");
 // import { DeviceProductLayout } from "usb-support/dist/typings";
@@ -70,13 +76,10 @@ class App {
         const previousPressed = this.pressed;
         const released = previousPressed.filter(press => !pressed.includes(press));
         this.pressed = pressed;
-        const releasesByButton = {
-            blue: released.includes('blue'),
-            red: released.includes('red'),
-            yellow: released.includes('yellow'),
-            green: released.includes('green'),
-            switch: released.includes('switch'),
-        };
+        const releasesByButton = released.reduce((all, one) => {
+            all[one] = true;
+            return all;
+        }, {});
         const configMatches = this.getConfigMatches(releasesByButton);
         const matchedConfig = configMatches.reduce((best, one) => (best ? best.buttons.length : 0) > one.buttons.length ? best : one, null);
         if (matchedConfig && matchedConfig.releases) {
@@ -159,13 +162,12 @@ class App {
             }
             return all;
         };
-        const pressesByButton = {
-            blue: this.lastPresses.reduce(colorCounter('blue'), []).length,
-            red: this.lastPresses.reduce(colorCounter('red'), []).length,
-            yellow: this.lastPresses.reduce(colorCounter('yellow'), []).length,
-            green: this.lastPresses.reduce(colorCounter('green'), []).length,
-            switch: this.lastPresses.reduce(colorCounter('switch'), []).length,
-        };
+        const pressesByButton = this.lastPresses.reduce((all, one) => {
+            one.forEach((uno) => {
+                all[uno] = this.lastPresses.reduce(colorCounter(uno), []).length;
+            });
+            return all;
+        }, {});
         const configMatches = this.getConfigMatches(pressesByButton);
         // presses action, choose the best match
         const matchedConfig = configMatches.reduce((best, one) => {

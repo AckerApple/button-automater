@@ -1,6 +1,14 @@
+const controllerPath = process.env.CONTROLLER_PATH || './configs/eg-starts.controller.json'
+const actionsPath = process.env.ACTIONS_PATH || './configs/actions/button-config.json'
+
+console.log('⚙️ Using configs', {
+  controllerPath,
+  actionsPath
+})
+
 import { UsbConnection } from "usb-support/dist/UsbConnection.class"
-import * as controllerConfig from "./configs/eg-starts.controller.json"
-import * as defaultActions from "./configs/actions/button-config.json"
+const controllerConfig = require(controllerPath)
+const defaultActions = require(actionsPath)
 import * as jordiActions from "./configs/actions/jordi-config.json"
 import { Subscription } from "rxjs"
 import { Action, ActionConfig } from "./types"
@@ -89,13 +97,11 @@ class App {
     const released = previousPressed.filter(press => !pressed.includes(press))
     this.pressed = pressed
 
-    const releasesByButton = {
-      blue: released.includes('blue'),
-      red: released.includes('red'),
-      yellow: released.includes('yellow'),
-      green: released.includes('green'),
-      switch: released.includes('switch'),
-    }
+    const releasesByButton = released.reduce((all, one) => {
+      all[one] = true
+      return all
+    }, {})
+
     const configMatches: ActionConfig[] = this.getConfigMatches(releasesByButton)
     const matchedConfig: ActionConfig = configMatches.reduce((best, one) => (best ? best.buttons.length : 0) > one.buttons.length ? best : one, null)
     if (matchedConfig && matchedConfig.releases) {
@@ -201,13 +207,13 @@ class App {
       return all
     }
 
-    const pressesByButton = {
-      blue: this.lastPresses.reduce(colorCounter('blue'), []).length,
-      red: this.lastPresses.reduce(colorCounter('red'), []).length,
-      yellow: this.lastPresses.reduce(colorCounter('yellow'), []).length,
-      green: this.lastPresses.reduce(colorCounter('green'), []).length,
-      switch: this.lastPresses.reduce(colorCounter('switch'), []).length,
-    }
+    const pressesByButton = this.lastPresses.reduce((all, one) => {
+      one.forEach((uno) => {
+        all[uno] = this.lastPresses.reduce(colorCounter(uno), []).length
+      });
+
+      return all
+    }, {})
 
     const configMatches: ActionConfig[] = this.getConfigMatches(pressesByButton)
    
