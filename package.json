@@ -1,12 +1,12 @@
 {
   "name": "button-automator",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "NO_ACTION=1 jest --detectOpenHandles --no-cache",
     "test:watch": "npm run test -- --watch",
-    "save": "npm run build && npm run patch:version && git add . && git commit -m \"update\" && git push",
+    "save": "npm run build && npm run test && npm run patch:version && git add . && git commit -m \"update\" && git push",
     "patch:version": "npm --no-git-tag-version version patch",
     "start:elias": "CONTROLLER_PATH=./configs/elias-starts.controller.json ACTIONS_PATH=./configs/actions/elias-config.json node dist",
     "start": "node dist",
