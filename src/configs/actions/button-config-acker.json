@@ -1,4 +1,47 @@
 {
+  "events": [{
+    "buttons": [["green", "switch"]],
+    "actions": [{
+      "title": "💰 jira mula board",
+      "itemPath": "https://bstock.atlassian.net/jira/software/c/projects/MULA/boards/17"
+    }]
+  },{
+    "buttons": [["green", "switch"], ["green", "switch"]],
+    "actions": [{
+      "title": "web ⚡️ transactions 3mp",
+      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/transactions/-/merge_requests"
+    }]
+  },{
+    "buttons": [["green", "switch"], ["green", "switch"], ["green:hold", "switch"]],
+    "actions": [{
+      "title": "⚡️ transactions dev",
+      "itemPath": "https://payments-transactions.bstock-dev.com/v1/swagger/"
+      }]
+  },{
+    "buttons": [["green", "switch"], ["green", "switch"], ["green", "switch"]],
+    "actions": [{
+      "title": "web 💳 payment methods 3mp",
+      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/methods/-/merge_requests"
+    }]
+  },{
+    "buttons": [["green", "switch"], ["green", "switch"], ["green", "switch"], ["green:hold", "switch"]],
+    "actions": [{
+      "title": "💳 payment methods dev",
+      "itemPath": "https://payments-methods.bstock-dev.com/v1/swagger/"
+    }]
+  },{
+    "buttons": [["green", "switch"], ["green", "switch"], ["green", "switch"], ["green", "switch"]],
+    "actions": [{
+      "title": "🪙 web payment shared",
+      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/common/payments-shared/-/merge_requests"
+    }]
+  },{
+    "buttons": [["green", "switch"], ["green", "switch"], ["green", "switch"], ["green", "switch"], ["green", "switch"]],
+    "actions": [{
+      "title": "🐈‍⬛ 🔧 nestjs-utils",
+      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/common/nestjs-utils/-/merge_requests"
+    }]
+  }],
   "🔴🟢🟡🔵 change-config": {
     "buttons": ["yellow", "green", "red", "blue"],
     "hold": {
@@ -133,23 +176,7 @@
       "title": "Messages",
       "itemPath": "",
       "app":{ "app":{"name": "Messages" }}
-    },
-    "presses": [{
-      "title": "💰 jira mula board",
-      "itemPath": "https://bstock.atlassian.net/jira/software/c/projects/MULA/boards/17"
-    },{
-      "title": "web ⚡️ transactions 3mp",
-      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/transactions/-/merge_requests"
-    },{
-      "title": "web 💳 payment methods 3mp",
-      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/svc/payments/methods/-/merge_requests"
-    },{
-      "title": "🪙 web payment shared",
-      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/common/payments-shared/-/merge_requests"
-    },{
-      "title": "🐈‍⬛ 🔧 nestjs-utils",
-      "itemPath": "https://gitlab.bstock.io/b-stock/code/three-mp/common/nestjs-utils/-/merge_requests"
-    }]
+    }
   },
   "🔵 blue": {
     "buttons": ["blue"],

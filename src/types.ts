@@ -20,3 +20,20 @@ export class ActionConfig {
 
   constructor(public buttons: string[]) {}
 }
+
+export interface ButtonsEvent {
+  buttons: string[][]
+  actions: Action[]
+}
+
+export interface ButtonActionsConfig {
+  events: ButtonsEvent[]
+  // 7-10-2022: below deprecated
+  [name: string]: ActionConfig | ButtonsEvent[]
+}
+
+export interface BestAction {
+  action:Action
+  config: ActionConfig
+  actionType: 'press' | 'presses' | 'hold' | string
+}

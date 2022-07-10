@@ -1,0 +1,26 @@
+{
+  "restoreMocks": true,
+  "clearMocks": true,
+  "resetMocks": true,
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "node",
+    "ts"
+  ],
+  "rootDir": "./src",
+  "testRegex": ".*\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.ts$": "ts-jest"
+  },
+  "coverageDirectory": "../coverage",
+  "collectCoverageFrom": [
+    "**/*.{ts,js,jsx}",
+    "!**/*.spec.e2e.{ts,js,jsx}",
+    "!**/_*.{ts,js,jsx}",
+    "!**/node_modules/**",
+    "!**/app/**",
+    "!**/.history/**"
+  ],
+  "testEnvironment": "node"
+}

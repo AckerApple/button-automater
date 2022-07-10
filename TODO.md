@@ -1,5 +1,9 @@
 TODO
 
+- have actions that involved holds
+  - 🔵 blue button plus hold blue button means open and start transactions
+  - 🔵🔵 blue button twice plus hold blue button means open and start methods
+
 - Config file to use is hard coded
   - eg-starts.controller.json
 
