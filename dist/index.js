@@ -5,7 +5,7 @@ const jordiActions = require("./configs/actions/jordi-config.json");
 const controllerPath = process.env.CONTROLLER_PATH || './configs/eg-starts.controller.json';
 const actionsPath = process.env.ACTIONS_PATH || './configs/actions/button-config-acker.json';
 if (process.env.NO_ACTION) {
-    console.warn('🟧 no action mode');
+    console.warn(`🟧 no action mode set to: ${process.env.NO_ACTION}`);
 }
 console.log('⚙️ Using configs', {
     controllerPath,
